@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ -z "$NNN_USE_EDITOR" ]; then
+    notify-send 'zero'
+else
+    notify-send "$NNN_USE_EDITOR"
+fi

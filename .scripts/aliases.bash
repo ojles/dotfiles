@@ -1,0 +1,5 @@
+alias ls='ls --color=auto'
+alias dot='git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+alias transs='~/.scripts/transs.sh'
+alias uni='cd ~/workspace/lnu/uni'
+alias lne='cd ~/workspace/lnu'

@@ -1,0 +1,77 @@
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'leshill/vim-json'
+Plug 'leafgarland/typescript-vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'connorholyday/vim-snazzy'
+Plug 'morhetz/gruvbox'
+Plug 'lervag/vimtex'
+Plug 'vim-scripts/ukrainian-enhanced.vim'
+call plug#end()
+
+set nocompatible
+filetype plugin on
+syntax on
+
+colorscheme gruvbox
+let g:gruvbox_contrast_dark='medium'
+set bg=dark
+
+set visualbell
+set number
+set relativenumber
+set backspace=indent,eol,start  " more powerful backspacing
+set history=50                  " keep 50 lines of command line history
+set ruler                       " show the cursor position all the time
+set incsearch                   " show partial matches for a search phrase
+set hlsearch                    " highlight all matching phrases (no disable highlight :noh)
+                                " tab button settings
+set expandtab                   " use spaces when tab pressed
+set shiftwidth=4		" use four spaces for shift command (>>)
+set tabstop=4                   " show tabs as eight columns
+set softtabstop=4
+set smartindent
+
+
+" Ukrainian support
+set keymap=ukrainian-enhanced
+set iminsert=0
+set imsearch=0
+
+" NERDTree config
+map <C-n> :NERDTreeToggle<CR>
+
+
+" vimtex config
+let g:vimtex_view_method='zathura'
+
+" Custom mappings for programming
+map <Space><Space> <Esc>/---<Enter>"_c3l
+map <C-c> gg0Cpackage<Space><Esc>:read<Space>!echo<Space>%:r<Enter>kJd3f/:s/\//\./g<Enter>A;<Esc>dF.o<Enter>public class <Esc>:read<Space>!echo<Space>%:t:r<Enter>kJA<Space>{<Enter>}<Esc>O
+
+
+" Suffixes that get lower priority when doing tab completion for filenames.
+" These are files we are not likely to want to edit or read.
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc,.png,.jpg
+
+" Move the swap file location to protect against CVE-2017-1000382
+if exists('$XDG_CACHE_HOME')
+    let &g:directory=$XDG_CACHE_HOME
+else
+    let &g:directory=$HOME . '/.cache'
+endif
+
+let &g:directory.='/vim/swap//'
+" Create swap directory if it doesn't exist
+if ! isdirectory(expand(&g:directory))
+    silent! call mkdir(expand(&g:directory), 'p', 0700)
+endif
+
+if has('gui_running')
+    " Make shift-insert work like in Xterm
+    map <S-Insert> <MiddleMouse>
+    map! <S-Insert> <MiddleMouse>
+endif

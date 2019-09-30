@@ -1,0 +1,23 @@
+#!/bin/bash
+
+throw_error() {
+    echo "ERROR: $1"
+    exit $2
+}
+
+if [ $# -le 0 ]; then
+    throw_error "To few parameters!" -1
+fi
+
+if [ ! -f ${1} ]; then
+    throw_error "$1 is not a file!" -2
+fi
+
+
+cd $(dirname -- "$1")
+
+SOURCE_FILE=$(basename -- "$1")
+#EXECUTABLE_NAME=${SOURCE_FILE%.*}
+
+#g++ -Wall -o $EXECUTABLE_NAME $SOURCE_FILE
+g++ -Wall $SOURCE_FILE

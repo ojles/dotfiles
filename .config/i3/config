@@ -1,0 +1,180 @@
+set $mod Mod4
+
+set $TERMINAL xfce4-terminal
+
+set $ll h
+set $rr l
+set $uu k
+set $dd j
+
+exec_always ~/.config/i3/screen.sh
+exec_always ~/.config/i3/keyboard.sh
+exec slack --no-startup-id
+exec telegram-desktop --no-startup-id
+
+gaps inner 0
+gaps outer 0
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+bindsym $mod+Shift+f mode "$mode_gaps"
+
+mode "$mode_gaps" {
+    bindsym plus gaps outer all plus 5
+    bindsym minus gaps outer all minus 5
+    bindsym Shift+plus gaps inner all plus 5;
+    bindsym Shift+minus gaps inner all minus 5;
+    bindsym 0 gaps inner all set 0; gaps outer all set 0
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+
+font pango:DejaVu Sans Mono 8
+
+default_border pixel 3px
+popup_during_fullscreen leave_fullscreen
+floating_modifier $mod
+
+bindsym $mod+Return exec $TERMINAL
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+x exec ~/.config/i3/lock.sh
+
+
+# change focus
+bindsym $mod+$ll focus left
+bindsym $mod+$dd focus down
+bindsym $mod+$uu focus up
+bindsym $mod+$rr focus right
+
+# move focused window
+bindsym $mod+Shift+$ll move left
+bindsym $mod+Shift+$dd move down
+bindsym $mod+Shift+$uu move up
+bindsym $mod+Shift+$rr move right
+
+# split in horizontal orientation
+bindsym $mod+g split h
+
+# change layout
+bindsym $mod+v split v
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+
+set $ws1 "1:1"
+set $ws2 "2:2"
+set $ws3 "3:3"
+set $ws4 "4:4"
+set $ws5 "5:5"
+set $ws6 "6:6"
+set $ws7 "7:7"
+set $ws8 "8:TODOs"
+set $ws9 "9:Music"
+set $ws10 "10:Messaging"
+
+set $secondMonitor VGA-0
+set $mainMonitor DisplayPort-0
+
+workspace $ws1 output $secondMonitor
+workspace $ws2 output $mainMonitor
+workspace $ws3 output $mainMonitor
+workspace $ws4 output $mainMonitor
+workspace $ws5 output $mainMonitor
+workspace $ws6 output $mainMonitor
+workspace $ws7 output $mainMonitor
+workspace $ws8 output $secondMonitor
+workspace $ws9 output $secondMonitor
+workspace $ws10 output $secondMonitor
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+assign [class="Slack"] $ws10
+assign [class="TelegramDesktop"] $ws10
+assign [class="Skype"] $ws10
+assign [class="Viber"] $ws10
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec ~/.scripts/dmenu-shutdown.sh
+
+mode "resize" {
+        bindsym $ll resize shrink width 6 px or 6 ppt
+        bindsym $dd resize grow height 6 px or 6 ppt
+        bindsym $uu resize shrink height 6 px or 6 ppt
+        bindsym $rr resize grow width 6 px or 6 ppt
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+bar {
+        status_command i3status
+        strip_workspace_numbers yes
+}
+
+### --- audio controls --- ###								# INCOMPATIBLE
+#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec /usr/bin/pulseaudio-ctl up
+bindsym XF86AudioLowerVolume exec /usr/bin/pulseaudio-ctl down
+bindsym XF86AudioMute exec /usr/bin/pulseaudio-ctl mute
+
+### --- screen brightness --- ###				# NOT WORKING
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20
+
+### --- scratchpad --- ###
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+### --- screenshot --- ###
+bindsym Print exec deepin-screenshot
+
+### --- dmenu mappings --- ###
+bindsym $mod+Shift+o exec ~/.scripts/dmenu-emoji.sh
+bindsym $mod+Shift+u exec ~/.scripts/dmenu-netctl.sh
+bindsym $mod+Shift+i exec ~/.scripts/dmenu-xrandr.sh
+bindsym $mod+Shift+p exec ~/.scripts/pomodoro/pomodoro.bash
+
+### --- file manager --- ###
+bindsym $mod+n exec --no-startup-id st -e bash -c nnn
+
+# disable beep
+exec_always xset b off
