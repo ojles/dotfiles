@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/home/me/workspace/c/hello-stm32-0-blinky'
+let g:netrw_dirhist_9='/home/me/workspace/c/openwrt'
+let g:netrw_dirhist_8='/home/me/workspace/c/openwrt/toolchain/gcc/initial'
+let g:netrw_dirhist_7='/home/me/workspace/c/openwrt'
+let g:netrw_dirhist_6='/home/me/workspace/c/openwrt/target/linux/omap'
+let g:netrw_dirhist_5='/home/me/workspace/c/openwrt/target/linux/omap/profiles'
+let g:netrw_dirhist_4='/home/me/workspace/c/openwrt/target/linux/omap'
+let g:netrw_dirhist_3='/home/me/workspace/c/openwrt'
+let g:netrw_dirhist_2='/home/me/workspace/c/openwrt/target/linux'
+let g:netrw_dirhist_1='/home/me/workspace/c/openwrt/target/linux/omap'
